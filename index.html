@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CoinReel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F7F6FA;
+    --stroke:#E8E6EF;
+    --gold:#C9820F;
+    --coral:#FF6F59;
+    --text:#1B1032;
+    --text2:#5B5470;
+    --text3:#938B9E;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent; margin:0; padding:0;}
+  html,body{height:100%; overflow:hidden; font-family:'Inter',sans-serif; background:#fff;}
+  
+  .app{
+    width:100vw; height:100vh; height:100dvh;
+    display:flex; flex-direction:column; background:#fff;
+    position:relative;
+  }
+
+  /* ===== HEADER - ONE LINE ===== */
+  header{
+    flex-shrink:0;
+    display:flex; align-items:center; gap:8px;
+    padding:10px 12px;
+    border-bottom:1px solid var(--stroke);
+    background:#fff;
+  }
+  .brand{
+    display:flex; align-items:center; gap:5px; flex-shrink:0;
+  }
+  .brand-mark{
+    width:24px; height:24px; border-radius:7px;
+    background:conic-gradient(from 220deg, var(--coral), var(--gold), var(--coral));
+    display:flex; align-items:center; justify-content:center; font-size:13px;
+  }
+  .brand-name{font-family:'Baloo 2'; font-weight:700; font-size:15px; color:var(--text);}
+  
+  .search-box{
+    flex:1; display:flex; align-items:center; gap:5px;
+    background:var(--surface); border:1px solid var(--stroke);
+    border-radius:20px; padding:5px 10px; min-width:0;
+  }
+  .search-box svg{width:13px; height:13px; stroke:var(--text3); flex-shrink:0;}
+  .search-box input{
+    flex:1; border:none; outline:none; background:transparent;
+    font-size:12px; color:var(--text); min-width:0;
+  }
+  .search-box input::placeholder{color:var(--text3);}
+
+  .balance{
+    display:flex; align-items:center; gap:4px;
+    background:var(--surface); border:1px solid var(--stroke);
+    padding:5px 9px; border-radius:18px; flex-shrink:0; cursor:pointer;
+  }
+  .balance span{font-family:'JetBrains Mono'; font-weight:700; font-size:12px; color:var(--gold);}
+
+  /* ===== CATEGORY TABS ===== */
+  .cats{
+    display:flex; gap:18px; overflow-x:auto; scrollbar-width:none;
+    padding:10px 14px 8px; border-bottom:1px solid var(--stroke); flex-shrink:0;
+    background:#fff;
+  }
+  .cats::-webkit-scrollbar{display:none;}
+  .cat{
+    flex-shrink:0; background:none; border:none; cursor:pointer;
+    font-weight:600; font-size:13px; color:var(--text3);
+    padding-bottom:7px; position:relative;
+  }
+  .cat.active{color:var(--text);}
+  .cat.active::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:2.5px;
+    background:var(--coral); border-radius:2px;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main{
+    flex:1; overflow-y:auto; min-height:0;
+    background:#faf9fc;
+  }
+  .main-inner{max-width:640px; margin:0 auto; padding:8px 0 20px;}
+
+  .video-card{
+    background:#fff;
+    margin-bottom:10px;
+    border-bottom:6px solid #f0eef5;
+  }
+  .thumb{
+    position:relative; width:100%; padding-top:56.25%; background:#000; cursor:pointer;
+  }
+  .thumb iframe{position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;}
+  .thumb-overlay{
+    position:absolute; inset:0; z-index:2;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .play-icon{
+    width:52px; height:52px; border-radius:50%;
+    background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:#fff;
+  }
+  .dur{
+    position:absolute; right:8px; bottom:8px; z-index:3;
+    background:rgba(0,0,0,.7); color:#fff; font-size:10px;
+    font-family:'JetBrains Mono'; padding:2px 6px; border-radius:5px;
+  }
+  .meta{padding:10px 14px 12px;}
+  .title{font-weight:600; font-size:14px; color:var(--text); margin-bottom:4px; line-height:1.3;}
+  .channel{font-size:11.5px; color:var(--text3);}
+  .ad-box{
+    margin:10px 14px 6px; min-height:50px;
+    display:flex; justify-content:center; align-items:center;
+    background:#f5f4f8; border-radius:8px; overflow:hidden;
+  }
+
+  /* ===== BOTTOM NAV ===== */
+  nav{
+    flex-shrink:0; display:flex; justify-content:center;
+    background:rgba(255,255,255,.95); backdrop-filter:blur(12px);
+    border-top:1px solid var(--stroke);
+    padding:8px 4px calc(env(safe-area-inset-bottom,0px) + 8px);
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  nav.hide{transform:translateY(100%); opacity:0; pointer-events:none;}
+  .nav-inner{display:flex; width:100%; max-width:640px;}
+  .nav-btn{
+    flex:1; background:none; border:none; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    color:var(--text3); font-size:10px; font-weight:600; padding:4px 0;
+  }
+  .nav-btn .e{font-size:20px; filter:grayscale(70%) opacity(.7);}
+  .nav-btn.active{color:var(--gold);}
+  .nav-btn.active .e{filter:none; transform:scale(1.1);}
+
+  /* ===== FULLSCREEN PLAYER ===== */
+  .player-page{
+    position:fixed; inset:0; z-index:100;
+    background:#000; display:none; flex-direction:column;
+  }
+  .player-page.show{display:flex;}
+  .player-top{
+    flex-shrink:0; display:flex; align-items:center; gap:10px;
+    padding:12px 14px; background:rgba(0,0,0,.85);
+  }
+  .back-btn{
+    width:36px; height:36px; border-radius:50%; border:none;
+    background:rgba(255,255,255,.15); color:#fff; font-size:18px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .player-title{
+    flex:1; color:#fff; font-size:14px; font-weight:600;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .player-frame{
+    flex:1; position:relative; background:#000;
+  }
+  .player-frame iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0;
+  }
+
+  /* ===== OTHER TABS ===== */
+  .tab{display:none; padding:16px; max-width:640px; margin:0 auto;}
+  .tab.active{display:block;}
+  .section-title{font-family:'Baloo 2'; font-weight:700; font-size:20px; color:var(--text); margin-bottom:4px;}
+  .section-sub{font-size:12px; color:var(--text3); margin-bottom:16px;}
+  .card{
+    background:var(--surface); border:1px solid var(--stroke);
+    border-radius:16px; padding:16px; margin-bottom:12px;
+  }
+  .btn{
+    border:none; cursor:pointer; font-weight:600; border-radius:11px;
+    padding:10px 14px; font-size:13px; width:100%;
+    background:var(--gold); color:#3A2705;
+  }
+  .btn:disabled{background:#e8e6ef; color:var(--text3);}
+
+  .toast{
+    position:fixed; left:50%; bottom:90px; transform:translateX(-50%) translateY(20px);
+    background:#1B1032; color:#fff; font-size:13px; font-weight:600;
+    padding:10px 18px; border-radius:24px; opacity:0; pointer-events:none;
+    transition:all .3s; z-index:200; white-space:nowrap;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- HEADER - ONE LINE -->
+  <header>
+    <div class="brand">
+      <div class="brand-mark">🎬</div>
+      <span class="brand-name">CoinReel</span>
+    </div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="Search..." oninput="filterVideos()">
+    </div>
+    <div class="balance" onclick="showTab('wallet')">
+      <span>🪙</span>
+      <span id="coinBalance">120</span>
+    </div>
+  </header>
+
+  <!-- CATEGORIES (normal names) -->
+  <div class="cats" id="cats">
+    <button class="cat active" data-cat="featured" onclick="selectCat('featured',this)">Featured</button>
+    <button class="cat" data-cat="music" onclick="selectCat('music',this)">Music</button>
+    <button class="cat" data-cat="shorts" onclick="selectCat('shorts',this)">Shorts</button>
+    <button class="cat" data-cat="trending" onclick="selectCat('trending',this)">Trending</button>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <div class="main-inner">
+      <div id="videoList"></div>
+      <div id="sentinel" style="height:1px;"></div>
+    </div>
+
+    <div class="tab" id="tab-earn">
+      <div class="section-title">Earn Coins</div>
+      <div class="section-sub">Demo only</div>
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:8px;">Daily Check-in +15 🪙</div>
+        <button class="btn" id="checkinBtn" onclick="claimCheckin()">Claim today</button>
+      </div>
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:8px;">Spin & Win</div>
+        <button class="btn" onclick="spin()">Spin the wheel</button>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-invite">
+      <div class="section-title">Invite</div>
+      <div class="section-sub">Demo referral</div>
+      <div class="card">
+        <div style="font-family:'JetBrains Mono';font-weight:700;font-size:18px;margin-bottom:10px;" id="refCode">CR-XXXX</div>
+        <button class="btn" onclick="copyRef()">Copy Code</button>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-wallet">
+      <div class="section-title">Wallet</div>
+      <div class="section-sub">Demo balance</div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:12px;color:var(--text3);">Coin Balance</div>
+        <div style="font-family:'JetBrains Mono';font-size:36px;font-weight:700;color:var(--gold);" id="walletBal">120</div>
+      </div>
+    </div>
+
+    <div class="tab" id="tab-profile">
+      <div class="section-title">Profile</div>
+      <div class="card">
+        <div style="font-weight:700;">Demo User</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px;">Member since 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottomNav">
+    <div class="nav-inner">
+      <button class="nav-btn active" data-tab="home" onclick="showTab('home')">
+        <span class="e">🏠</span>Home
+      </button>
+      <button class="nav-btn" data-tab="earn" onclick="showTab('earn')">
+        <span class="e">💰</span>Earn
+      </button>
+      <button class="nav-btn" data-tab="invite" onclick="showTab('invite')">
+        <span class="e">🙏</span>Invite
+      </button>
+      <button class="nav-btn" data-tab="wallet" onclick="showTab('wallet')">
+        <span class="e">🎁</span>Rewards
+      </button>
+      <button class="nav-btn" data-tab="profile" onclick="showTab('profile')">
+        <span class="e">👤</span>Me
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- FULLSCREEN PLAYER -->
+<div class="player-page" id="playerPage">
+  <div class="player-top">
+    <button class="back-btn" onclick="closePlayer()">←</button>
+    <div class="player-title" id="playerTitle">Video</div>
+  </div>
+  <div class="player-frame">
+    <iframe id="playerIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const state = { coins: 120, checkedIn: false };
+
+/* Mixed content: Bhojpuri songs + Hindi + South movies + Status type */
+const videoPool = [
+  // Bhojpuri
+  {id:"__g1eDqa6l0", title:"KAMAR HILELA - Rakesh Mishra & Shilpi Raj", channel:"Rakesh Mishra", dur:"3:30"},
+  {id:"Z7rb-nmKD7c", title:"3 Sau - Golu Gold & Neha Raj", channel:"Golu Gold", dur:"3:45"},
+  {id:"B_Y2Ya4e9PY", title:"Balamuwa Ke Ballam - Samar Singh", channel:"Samar Singh", dur:"3:20"},
+  {id:"CuFQNvVuWb4", title:"Mara Tiya Line - Khesari Lal Yadav", channel:"Khesari Lal", dur:"3:15"},
+  {id:"QeR2Sk8Esgk", title:"Ghaghari - Pawan Singh", channel:"Pawan Singh", dur:"3:40"},
+  {id:"mOu_zBiFi5U", title:"Kala Odhani - Pawan Singh", channel:"Pawan Singh", dur:"4:00"},
+  {id:"H9z7upd8jf4", title:"Piya Chhod Dihin Na - Pawan Singh", channel:"Pawan Singh", dur:"3:50"},
+
+  // Hindi
+  {id:"BddP6PYo2gs", title:"Kesariya - Brahmāstra", channel:"Arijit Singh", dur:"4:29"},
+  {id:"JGwWNGJdvx8", title:"Shape of You - Ed Sheeran", channel:"Ed Sheeran", dur:"4:24"},
+  {id:"2Vv-BfVoq4w", title:"Perfect - Ed Sheeran", channel:"Ed Sheeran", dur:"4:40"},
+  {id:"YQHsXMglC9A", title:"Hello - Adele", channel:"Adele", dur:"6:07"},
+  {id:"RgKAFK5djSk", title:"See You Again - Wiz Khalifa", channel:"Wiz Khalifa", dur:"3:58"},
+  {id:"CevxZvSJLk8", title:"Roar - Katy Perry", channel:"Katy Perry", dur:"4:30"},
+
+  // South movies / songs
+  {id:"B6h-kQLQqec", title:"Sarrainodu (Hindi Dubbed) - Allu Arjun", channel:"Allu Arjun", dur:"2:15:00"},
+  {id:"Oz9SGhW9MUs", title:"Yevadu (Hindi Dubbed) - Ram Charan", channel:"Ram Charan", dur:"2:20:00"},
+  {id:"FhGPD3jML6w", title:"Gold Thief - Allari Naresh", channel:"Allari Naresh", dur:"2:05:00"},
+  {id:"x6Q7c9RyMzk", title:"Rowdy Baby - Maari 2", channel:"Dhanush", dur:"3:50"},
+
+  // Status type
+  {id:"60ItHLz5WEA", title:"Faded - Alan Walker", channel:"Alan Walker", dur:"3:32"},
+  {id:"fKopy74weus", title:"Thunder - Imagine Dragons", channel:"Imagine Dragons", dur:"3:24"},
+  {id:"JRfuAukYTKg", title:"Blinding Lights - The Weeknd", channel:"The Weeknd", dur:"3:20"},
+  {id:"hT_nvWreIhg", title:"Counting Stars - OneRepublic", channel:"OneRepublic", dur:"4:44"},
+  {id:"OPf0YbXqDm0", title:"Uptown Funk - Bruno Mars", channel:"Mark Ronson", dur:"4:30"},
+];
+
+let feedQueue = [];
+let searchQ = "";
+
+function shuffle(a){
+  const arr = [...a];
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function nextBatch(n){
+  while(feedQueue.length < n) feedQueue = feedQueue.concat(shuffle(videoPool));
+  return feedQueue.splice(0,n);
+}
+
+function cardHTML(v){
+  return `
+    <div class="video-card">
+      <div class="thumb" onclick="openPlayer('\( {v.id}',' \){v.title.replace(/'/g,"\\'")}')">
+        <iframe src="https://www.youtube.com/embed/${v.id}?modestbranding=1&rel=0&controls=0&showinfo=0" loading="lazy"></iframe>
+        <div class="thumb-overlay"><div class="play-icon">▶</div></div>
+        <div class="dur">${v.dur}</div>
+      </div>
+      <div class="meta">
+        <div class="title">${v.title}</div>
+        <div class="channel">${v.channel}</div>
+        <div class="ad-box" data-ad></div>
+      </div>
+    </div>
+  `;
+}
+
+function loadAds(parent){
+  parent.querySelectorAll("[data-ad]:not([data-loaded])").forEach(box=>{
+    box.dataset.loaded = "1";
+    const s1 = document.createElement("script");
+    s1.textContent = `window.atOptions={key:"bd01fbf8c57dfec8eaf418c7b90ff9f8",format:"iframe",height:50,width:320,params:{}};`;
+    box.appendChild(s1);
+    const s2 = document.createElement("script");
+    s2.src = "https://www.highperformanceformat.com/bd01fbf8c57dfec8eaf418c7b90ff9f8/invoke.js";
+    s2.async = true;
+    box.appendChild(s2);
+  });
+}
+
+function renderFeed(reset=true){
+  const list = document.getElementById("videoList");
+  if(reset){
+    list.innerHTML = "";
+    feedQueue = [];
+  }
+  const batch = nextBatch(reset ? 6 : 4);
+  const temp = document.createElement("div");
+  temp.innerHTML = batch.map(cardHTML).join("");
+  while(temp.firstChild) list.appendChild(temp.firstChild);
+  loadAds(list);
+}
+
+function filterVideos(){
+  searchQ = document.getElementById("searchInput").value.trim().toLowerCase();
+  if(!searchQ){
+    renderFeed(true);
+    return;
+  }
+  const filtered = videoPool.filter(v => v.title.toLowerCase().includes(searchQ) || v.channel.toLowerCase().includes(searchQ));
+  const list = document.getElementById("videoList");
+  list.innerHTML = filtered.length ? filtered.map(cardHTML).join("") : `<div style="text-align:center;padding:40px;color:#888;">No videos found</div>`;
+  loadAds(list);
+}
+
+function selectCat(cat, btn){
+  document.querySelectorAll(".cat").forEach(c=>c.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("searchInput").value = "";
+  searchQ = "";
+  renderFeed(true);
+  showTab("home");
+}
+
+/* ===== PLAYER ===== */
+function openPlayer(id, title){
+  document.getElementById("playerTitle").textContent = title;
+  document.getElementById("playerIframe").src = `https://www.youtube.com/embed/${id}?autoplay=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3`;
+  document.getElementById("playerPage").classList.add("show");
+  document.getElementById("bottomNav").classList.add("hide");
+}
+function closePlayer(){
+  document.getElementById("playerPage").classList.remove("show");
+  document.getElementById("playerIframe").src = "";
+  document.getElementById("bottomNav").classList.remove("hide");
+}
+
+/* ===== TABS ===== */
+function showTab(name){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+
+  if(name === "home"){
+    document.querySelector('.nav-btn[data-tab="home"]').classList.add("active");
+    document.getElementById("cats").style.display = "flex";
+    document.getElementById("videoList").parentElement.style.display = "block";
+  } else {
+    document.getElementById("cats").style.display = "none";
+    document.getElementById("videoList").parentElement.style.display = "none";
+    const tab = document.getElementById("tab-"+name);
+    if(tab) tab.classList.add("active");
+    document.querySelector(`.nav-btn[data-tab="${name}"]`)?.classList.add("active");
+  }
+}
+
+/* ===== SIMPLE EARN / WALLET ===== */
+function claimCheckin(){
+  if(state.checkedIn) return;
+  state.checkedIn = true;
+  state.coins += 15;
+  updateCoins();
+  document.getElementById("checkinBtn").disabled = true;
+  document.getElementById("checkinBtn").textContent = "Claimed";
+  toast("+15 coins");
+}
+function spin(){
+  const rewards = [10,20,5,50,15,0,30];
+  const r = rewards[Math.floor(Math.random()*rewards.length)];
+  if(r>0){ state.coins += r; updateCoins(); toast("You won "+r+" coins!"); }
+  else toast("Try again!");
+}
+function copyRef(){
+  navigator.clipboard?.writeText(document.getElementById("refCode").textContent);
+  toast("Code copied");
+}
+function updateCoins(){
+  document.getElementById("coinBalance").textContent = state.coins;
+  document.getElementById("walletBal").textContent = state.coins;
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 2000);
+}
+
+/* infinite scroll */
+const obs = new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting && !searchQ) renderFeed(false);
+},{root:document.getElementById("main"), rootMargin:"200px"});
+obs.observe(document.getElementById("sentinel"));
+
+/* INIT */
+document.getElementById("refCode").textContent = "CR-" + Math.random().toString(36).substr(2,6).toUpperCase();
+renderFeed(true);
+updateCoins();
+</script>
+</body>
+  </html>
