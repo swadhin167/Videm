@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-  atOptions = {
-    'key' : '03af6bbbc30a5d919781552007beaa54',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/03af6bbbc30a5d919781552007beaa54/invoke.js"></script>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CoinReel — Watch. Earn. Repeat.</title>
@@ -19,16 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg-deep:#1B1032;
-    --surface:#271A46;
-    --surface-hi:#33224F;
-    --stroke:#3E2C63;
-    --gold:#F2B33D;
+    --bg-deep:#FFFFFF;
+    --surface:#F4F3F7;
+    --surface-hi:#ECEAF2;
+    --stroke:#E3E1EA;
+    --gold:#C9820F;
     --coral:#FF6F59;
-    --text-hi:#F5F1FF;
-    --text-mid:#C6B8E8;
-    --text-low:#8879A8;
-    --success:#4ADE80;
+    --text-hi:#1B1032;
+    --text-mid:#5B5470;
+    --text-low:#938B9E;
+    --success:#22A85C;
     --whatsapp:#25D366;
     --instagram-a:#F58529;
     --instagram-b:#DD2A7B;
@@ -40,7 +29,7 @@
   html,body{margin:0;padding:0; height:100%;}
   body{
     font-family:'Inter',sans-serif;
-    background:radial-gradient(circle at 20% 0%, #2A1B4A 0%, #140A26 55%, #0C0716 100%);
+    background:radial-gradient(circle at 20% 0%, #FBFAFD 0%, #F3F1F8 55%, #EDEBF3 100%);
     overflow:hidden;
   }
   .mono{font-family:'JetBrains Mono',monospace;}
@@ -80,16 +69,18 @@
     border:1px solid rgba(255,111,89,.35);
     padding:1px 5px; border-radius:20px; margin-left:5px; vertical-align:2px;
   }
-  .header-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
+  .header-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:5px;}
   .search-row{
-    display:flex; align-items:center; gap:4px;
+    display:flex; align-items:center; gap:3px;
     background:var(--surface); border:1px solid var(--stroke);
-    border-radius:8px; padding:3px 7px;
+    border-radius:7px; padding:2px 6px;
+    max-width:220px;
   }
-  .search-icon{width:11px;height:11px; stroke:var(--text-low); flex-shrink:0;}
+  .search-icon{width:10px;height:10px; stroke:var(--text-low); flex-shrink:0;}
   .search-input{
     flex:1; background:none; border:none; outline:none;
-    color:var(--text-hi); font-family:'Inter'; font-size:10.5px;
+    color:var(--text-hi); font-family:'Inter'; font-size:9.5px;
+    min-width:0;
   }
   .search-input::placeholder{color:var(--text-low);}
   .search-yt-btn{
@@ -139,17 +130,11 @@
     background:var(--surface); border:1px solid var(--stroke);
   }
   .quick-label{font-size:10px; color:var(--text-mid); font-weight:600; text-align:center; line-height:1.2;}
-  .video-avatar-row{display:flex; align-items:center; gap:8px; margin-top:2px;}
+  .video-avatar-row{display:flex; align-items:center; gap:8px; margin-top:6px;}
   .video-avatar{
     width:26px;height:26px;border-radius:50%; flex-shrink:0;
     background:conic-gradient(from 90deg, var(--coral), var(--gold), #7C5CFF, var(--coral));
   }
-  .video-open-icon{
-    margin-left:auto; width:32px; height:32px; border-radius:50%; flex-shrink:0;
-    background:var(--surface2, rgba(255,255,255,.06)); border:1px solid var(--stroke);
-    display:flex; align-items:center; justify-content:center; cursor:pointer; text-decoration:none;
-  }
-  .video-open-icon svg{width:15px;height:15px; stroke:var(--text-mid);}
   .wallet-chip{
     display:flex; align-items:center; gap:6px;
     background:var(--surface);
@@ -199,14 +184,14 @@
   .btn:active{transform:scale(.96);}
 
   /* ---------- Earn cards ---------- */
-  .earn-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-lg); padding:16px; margin-bottom:14px;}
+  .earn-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-lg); padding:16px; margin-bottom:14px; box-shadow:0 1px 3px rgba(27,16,50,.05);}
   .earn-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
   .earn-title{font-weight:700; font-size:14.5px; color:var(--text-hi);}
   .earn-reward{font-family:'JetBrains Mono'; font-size:12px; color:var(--gold); font-weight:700;}
 
   .streak-row{display:flex; gap:6px; margin-bottom:14px;}
   .streak-dot{flex:1; height:34px; border-radius:9px; background:rgba(255,255,255,.05); border:1px solid var(--stroke); display:flex;align-items:center;justify-content:center; font-size:11px; color:var(--text-low); font-family:'JetBrains Mono';}
-  .streak-dot.filled{background:rgba(242,179,61,.18); border-color:var(--gold); color:var(--gold);}
+  .streak-dot.filled{background:rgba(201,130,15,.14); border-color:var(--gold); color:var(--gold);}
   .streak-dot.today{outline:2px solid var(--coral); outline-offset:1px;}
 
   .wheel-wrap{display:flex; flex-direction:column; align-items:center; padding:6px 0 4px;}
@@ -232,11 +217,11 @@
   .btn-primary:disabled{background:var(--surface); color:var(--text-low); border:1px solid var(--stroke);}
 
   /* ---------- Wallet ---------- */
-  .balance-card{background:linear-gradient(135deg,#3A2560,#241640); border:1px solid var(--stroke); border-radius:var(--radius-lg); padding:22px 20px; margin-bottom:18px;}
+  .balance-card{background:linear-gradient(135deg,#FFF3DD,#F4E4C8); border:1px solid var(--stroke); border-radius:var(--radius-lg); padding:22px 20px; margin-bottom:18px;}
   .balance-label{font-size:11.5px; color:var(--text-low); margin-bottom:4px; display:flex; align-items:center; gap:6px;}
   .balance-num{font-family:'JetBrains Mono'; font-size:36px; font-weight:700; color:var(--gold);}
   .redeem-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:12px;}
-  .redeem-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-md); padding:14px 12px; text-align:center; cursor:pointer;}
+  .redeem-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-md); padding:14px 12px; text-align:center; cursor:pointer; box-shadow:0 1px 3px rgba(27,16,50,.05);}
   .redeem-card:active{transform:scale(.97);}
   .redeem-icon{font-size:24px; margin-bottom:6px;}
   .redeem-name{font-size:12px; font-weight:600; color:var(--text-hi); margin-bottom:4px; min-height:30px;}
@@ -247,7 +232,7 @@
   .avatar{width:74px;height:74px;border-radius:50%; background:conic-gradient(from 180deg, var(--coral), var(--gold), #7C5CFF, var(--coral)); margin-bottom:10px;}
   .profile-name{font-family:'Baloo 2'; font-weight:700; font-size:18px; color:var(--text-hi);}
   .profile-sub{font-size:12px; color:var(--text-low); margin-top:2px;}
-  .info-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:12px;}
+  .info-card{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(27,16,50,.05);}
   .info-title{font-weight:700; font-size:13px; color:var(--text-hi); margin-bottom:6px;}
   .info-body{font-size:12px; line-height:1.55; color:var(--text-mid);}
 
@@ -255,7 +240,7 @@
   nav{
     flex-shrink:0;
     display:flex; justify-content:center;
-    background:rgba(27,16,50,.92);
+    background:rgba(255,255,255,.92);
     backdrop-filter:blur(10px);
     border-top:1px solid var(--stroke);
     padding:10px 6px calc(env(safe-area-inset-bottom,0px) + 10px);
@@ -267,10 +252,10 @@
   .nav-btn.active .nav-emoji{filter:none; transform:scale(1.12);}
 
   /* ---------- Toast / modal ---------- */
-  .toast{position:fixed; left:50%; bottom:96px; transform:translate(-50%,20px); background:#F5F1FF; color:#1B1032; font-weight:600; font-size:12.5px; padding:10px 18px; border-radius:24px; opacity:0; pointer-events:none; transition:all .3s ease; z-index:80; white-space:nowrap; box-shadow:0 10px 24px rgba(0,0,0,.35);}
+  .toast{position:fixed; left:50%; bottom:96px; transform:translate(-50%,20px); background:#1B1032; color:#F5F1FF; font-weight:600; font-size:12.5px; padding:10px 18px; border-radius:24px; opacity:0; pointer-events:none; transition:all .3s ease; z-index:80; white-space:nowrap; box-shadow:0 10px 24px rgba(0,0,0,.2);}
   .toast.show{opacity:1; transform:translate(-50%,0);}
 
-  .modal-overlay{position:fixed; inset:0; background:rgba(10,5,20,.72); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:90; padding:30px;}
+  .modal-overlay{position:fixed; inset:0; background:rgba(27,16,50,.45); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:90; padding:30px;}
   .modal-overlay.show{display:flex;}
   .modal-box{background:var(--surface); border:1px solid var(--stroke); border-radius:var(--radius-lg); padding:24px 20px; text-align:center; width:100%; max-width:340px;}
   .modal-icon{font-size:34px; margin-bottom:8px;}
@@ -302,10 +287,7 @@
     </div>
     <div class="search-row">
       <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      <input id="searchInput" class="search-input" type="text" placeholder="Search videos..." oninput="filterVideos()" onkeydown="if(event.key==='Enter') searchYouTube()">
-      <button class="search-yt-btn" onclick="searchYouTube()" title="Search on YouTube">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#3A2705" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      </button>
+      <input id="searchInput" class="search-input" type="text" placeholder="Search videos..." oninput="filterVideos()">
     </div>
     <div class="header-icons-row">
       <button class="header-icon-btn" onclick="document.querySelector('.quick-grid').scrollIntoView({behavior:'smooth'})" title="Quick actions">
@@ -348,7 +330,7 @@
           </button>
         </div>
         <div class="section-title">For You</div>
-        <div class="section-sub">Real YouTube videos, playing right here · scroll for more · search to filter or jump to YouTube</div>
+        <div class="section-sub">Real videos, playing right here · scroll for more · search to filter</div>
         <div id="videoList"></div>
         <div id="feedSentinel" style="height:1px;"></div>
       </section>
@@ -415,11 +397,11 @@
         </div>
         <div class="info-card">
           <div class="info-title">About this app</div>
-          <div class="info-body">CoinReel plays real, publicly shared YouTube videos right here via YouTube's own player — nothing is downloaded, ripped, or re-hosted. Home scrolls endlessly by cycling through a curated pool of real, verified videos (not a live YouTube search, since that needs an API key this demo doesn't have). Coin balances, spin results and redemption items are simulated in your browser only.</div>
+          <div class="info-body">CoinReel plays real, publicly available videos right here — nothing is downloaded, ripped, or re-hosted. Home scrolls endlessly through a curated pool of real, verified videos. Coin balances, spin results and redemption items are simulated in your browser only.</div>
         </div>
         <div class="info-card">
           <div class="info-title">Version</div>
-          <div class="info-body">CoinReel Demo · v1.3 · single-file build</div>
+          <div class="info-body">CoinReel Demo · v1.4 · single-file build</div>
         </div>
       </section>
 
@@ -480,22 +462,22 @@ const state = {
 /* Real, publicly embeddable YouTube videos — verified against Wikipedia's
    "List of most-viewed YouTube videos" so the IDs are accurate official uploads */
 const videoPool = [
-  {id:"__g1eDqa6l0", title:"Kamar Hilela", channel:"T-Series", dur:"3:30"},
-  {id:"Z7rb-nmKD7c", title:"3 Sau", channel:"Golu Gold", dur:"3:45"},
-  {id:"B_Y2Ya4e9PY", title:"Balamuwa Ke Ballam", channel:"Samar Singh", dur:"3:20"},
-  {id:"CuFQNvVuWb4", title:"Mara Tiya Line", channel:"Khesari Lal Yadav", dur:"3:15"},
-  {id:"QeR2Sk8Esgk", title:"Ghaghari", channel:"T-Series", dur:"3:40"},
-  {id:"mOu_zBiFi5U", title:"Kala Odhani", channel:"Pawan Singh", dur:"4:00"},
-  {id:"H9z7upd8jf4", title:"Piya Chhod Dihin Na", channel:"T-Series", dur:"3:50"},
-  {id:"B6h-kQLQqec", title:"Sarrainodu (Full Hindi Dubbed Movie)", channel:"Goldmines", dur:"2:15:00"},
-  {id:"Oz9SGhW9MUs", title:"Yevadu (Blockbuster Hindi Dubbed Movie)", channel:"Goldmines", dur:"2:20:00"},
-  {id:"FhGPD3jML6w", title:"Gold Thief (Comedy Hindi Dubbed Movie)", channel:"Goldmines", dur:"2:05:00"},
-  {id:"BddP6PYo2gs", title:"Kesariya (from Brahmāstra)", channel:"Sony Music India", dur:"4:29"},
-  {id:"RKioDWlajvo", title:"Lehanga", channel:"Geet MP3", dur:"3:32"},
-  {id:"x6Q7c9RyMzk", title:"Rowdy Baby (from Maari 2)", channel:"Wunderbar Films", dur:"3:50"},
-  {id:"BBAyRBTfsOU", title:"Vaaste", channel:"T-Series", dur:"4:03"},
-  {id:"YpkJO_GrCo0", title:"Laung Laachi (Title Track)", channel:"T-Series Apna Punjab", dur:"3:15"},
-  {id:"hjWf8A0YNSE", title:"High Rated Gabru", channel:"T-Series", dur:"3:33"},
+  {id:"__g1eDqa6l0", title:"Rakesh Mishra Latest Bhojpuri Official Song 2024 - KAMAR HILELA | कमर हिलेला | Shilpi Raj", channel:"Rakesh Mishra & Shilpi Raj", dur:"3:30"},
+  {id:"Z7rb-nmKD7c", title:"3 Sau 🔥 Golu Gold & Neha Raj | Priyanka Maharaj | New Bhojpuri Hit Song 2024", channel:"Golu Gold & Neha Raj", dur:"3:45"},
+  {id:"B_Y2Ya4e9PY", title:"Balamuwa Ke Ballam ( Latest Bhojpuri Song 2024 ) Samar Singh", channel:"Samar Singh", dur:"3:20"},
+  {id:"CuFQNvVuWb4", title:"#Video | मारs तीया लाइन | #Khesari Lal Yadav | Mara Tiya Line | #Shilpi Raj | Bhojpuri New Song 2024", channel:"Khesari Lal Yadav", dur:"3:15"},
+  {id:"QeR2Sk8Esgk", title:"Power Star Pawan Singh - Ghaghari Official Bhojpuri Song 2025 Ft. Shweta Sharma | T-Series", channel:"Pawan Singh", dur:"3:40"},
+  {id:"mOu_zBiFi5U", title:"#Video - काला ओढ़नी | Powerstar #Pawan Singh | #Shilpi Raj | Kala Odhani | New Bhojpuri Song", channel:"Pawan Singh & Shilpi Raj", dur:"4:00"},
+  {id:"H9z7upd8jf4", title:"Power Star Pawan Singh - Latest Official Song 2024 | Piya Chhod Dihin Na Ft. Aastha Singh T-Series", channel:"Pawan Singh", dur:"3:50"},
+  {id:"B6h-kQLQqec", title:"Sarrainodu (4K ULTRA HD) Full Hindi Dubbed Movie | Allu Arjun, Rakul Preet Singh, Catherine Tresa", channel:"Allu Arjun", dur:"2:15:00"},
+  {id:"Oz9SGhW9MUs", title:"Yevadu (4K ULTRA HD) Blockbuster Hindi Dubbed Movie | Ram Charan, Allu Arjun, Shruti Hassan", channel:"Ram Charan & Allu Arjun", dur:"2:20:00"},
+  {id:"FhGPD3jML6w", title:"Gold Thief (HD) - South Superhit Comedy Hindi Dubbed Movie l Allari Naresh, Pooja Jhaveri", channel:"Allari Naresh", dur:"2:05:00"},
+  {id:"BddP6PYo2gs", title:"Kesariya - Brahmāstra | Ranbir Kapoor | Alia Bhatt | Pritam | Arijit Singh | Amitabh Bhattacharya | 4K", channel:"Arijit Singh", dur:"4:29"},
+  {id:"RKioDWlajvo", title:"Lehanga", channel:"Jass Manak", dur:"3:32"},
+  {id:"x6Q7c9RyMzk", title:"Rowdy Baby (from Maari 2)", channel:"Dhanush & Sai Pallavi", dur:"3:50"},
+  {id:"BBAyRBTfsOU", title:"Vaaste", channel:"Dhvani Bhanushali", dur:"4:03"},
+  {id:"YpkJO_GrCo0", title:"Laung Laachi (Title Track)", channel:"Ammy Virk & Neeru Bajwa", dur:"3:15"},
+  {id:"hjWf8A0YNSE", title:"High Rated Gabru", channel:"Guru Randhawa", dur:"3:33"},
 ];
 
 const redeemItems = [
@@ -591,7 +573,6 @@ function renderSearchResults(){
       <div class="no-results">
         <div class="no-results-icon">🔍</div>
         <p>No matching videos in this list.</p>
-        <button class="btn btn-primary" style="width:auto;padding:9px 20px;" onclick="searchYouTube()">Search "${escapeHtml(searchQuery)}" on YouTube</button>
       </div>`;
     return;
   }
@@ -629,12 +610,6 @@ function selectCategory(cat, evt){
     searchQuery = '';
     initHomeFeed();
   }
-}
-
-function searchYouTube(){
-  const q = document.getElementById('searchInput').value.trim();
-  if(!q) return;
-  window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q), '_blank');
 }
 
 function escapeHtml(s){
